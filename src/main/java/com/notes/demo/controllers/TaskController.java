@@ -1,12 +1,10 @@
 package com.notes.demo.controllers;
 
+import com.notes.demo.dto.CreateTaskDTO;
 import com.notes.demo.entities.TaskEntity;
 import com.notes.demo.service.TaskService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,8 +30,8 @@ public class TaskController {
         return tasks;
     }
 
-    @GetMapping("/{id")
-    public ResponseEntity<TaskEntity> getTaskById(int id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskEntity> getTaskById(@PathVariable("id") Integer id) {
         var task = taskService.getTaskById(id);
         if(task == null) {
             return ResponseEntity.notFound().build();
@@ -41,8 +39,9 @@ public class TaskController {
         return ResponseEntity.ok(task);
     }
 
-    @PostMapping("/{id")
-    public ResponseEntity<TaskEntity> addTask(){
-        taskService.addTask(String title, String description, String deadline);
+    @PostMapping("")
+    public ResponseEntity<TaskEntity> addTask(@RequestBody CreateTaskDTO createTaskDTO){
+        var task = taskService.addTask(createTaskDTO.getTitle(), createTaskDTO.getDescription(), createTaskDTO.getDeadline());
+        return ResponseEntity.ok(task);
     }
 }
