@@ -1,6 +1,7 @@
 package com.notes.demo.service;
 
 import com.notes.demo.entities.TaskEntity;
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,10 +9,11 @@ import java.util.Date;
 
 @Service
 public class TaskService {
+    @Getter
     private ArrayList<TaskEntity> tasks = new ArrayList<>();
     private int taskId = 1;
 
-    void addTask(String title, String description, String deadline) {
+    public void addTask(String title, String description, String deadline) {
         TaskEntity taskEntity = new TaskEntity();
         taskEntity.setId(taskId);
         taskEntity.setTitle(title);
@@ -22,11 +24,7 @@ public class TaskService {
         taskId++;
     }
 
-    ArrayList<TaskEntity> getTasks() {
-        return tasks;
-    }
-
-    TaskEntity getTaskById(int id) {
+    public TaskEntity getTaskById(int id) {
         tasks.stream().findAny().filter(taskEntity -> taskEntity.getId() == id).orElse(null);
         for(TaskEntity taskEntity: tasks) {
             if(taskEntity.getId() == id) {
